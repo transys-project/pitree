@@ -126,8 +126,10 @@ pensieve/pensieve_test/cooked_test_traces/
 
 # Result values
 results*
-# sim_*
+sim_*
 *.pyc
 precision/
 time/
 rewards/
+models/
+trees/
