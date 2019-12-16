@@ -13,6 +13,7 @@ Tested with Python 3.7.4:
 pip install -r requirements.txt
 unzip traces.zip
 unzip models.zip
+mkdir results
 ```
 
 ## Converting Decision Trees
@@ -47,7 +48,7 @@ If you want to test your own ABR algorithms with PiTree, you could
 ## Emulation with Mahimahi
 
 ```
-python main.py -a pensieve -t fcc -q lin -d
+python main.py -a pensieve -t fcc -q lin -d path/to/your/tree.pk -l
 ```
 Parameter | Candidates | Explanation
 :-: | :-: | :-: 

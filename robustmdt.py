@@ -56,8 +56,6 @@ class RobustMPCDT:
             net_env = env.Environment(all_cooked_time=all_cooked_time, all_cooked_bw=all_cooked_bw,
                                       all_file_names=all_file_names)
 
-        # if args.update:
-        #     log_f = log_f.replace('dt', 'du')
 
         if not viper_flag and args.log:
             log_path = LOG_FILE + '_' + net_env.all_file_names[net_env.trace_idx] + '_' + args.qoe_metric
@@ -137,48 +135,6 @@ class RobustMPCDT:
             #     a_batch[TOTAL_VIDEO_CHUNKS - video_chunk_remain][0] = bit_rate
             #     a_batch[TOTAL_VIDEO_CHUNKS - video_chunk_remain][2] = int(baseline.predict([serialized_state])[0])
 
-            # if args.update:
-            #     chunk_index = int(CHUNK_TIL_VIDEO_END_CAP - video_chunk_remain)
-            #     policy.chunk_leaf[chunk_index] = policy.tree.apply(np.array(serialized_state).reshape(1, -1))
-            #     if chunk_index < CHUNK_TIL_VIDEO_END_CAP - HORIZON:
-            #         in_compute.append(fsm.Trajectory(chunk_index, max(0, bit_rate - 1), buffer_size - CHUNK_LEN,
-            #                                          last_bit_rate, state, args))
-            #         in_compute.append(fsm.Trajectory(chunk_index, bit_rate, buffer_size - CHUNK_LEN,
-            #                                          last_bit_rate, state, args))
-            #         in_compute.append(fsm.Trajectory(chunk_index, min(5, bit_rate + 1), buffer_size - CHUNK_LEN,
-            #                                          last_bit_rate, state, args))
-            #
-            #     for traj in in_compute:
-            #         this_chunk_size = video_chunk_size
-            #         this_delay = delay
-            #         while True:
-            #             if traj.apply(this_chunk_size, this_delay) == CHUNK_SWITCH:
-            #                 new_bitrate = int(policy.predict(np.array(serial(traj.states)).reshape(1, -1))[0])
-            #                 traj.next_chunk(new_bitrate)
-            #                 this_chunk_size, this_delay = traj.trans_msg
-            #             else:
-            #                 break
-            #
-            #         while len(in_compute) > 1 and in_compute[0].end and in_compute[1].end and in_compute[2].end:
-            #             r_below = sum([get_reward(in_compute[0].quality[i], in_compute[0].rebuf[i],
-            #                                       in_compute[0].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-            #             r_normal = sum([get_reward(in_compute[1].quality[i], in_compute[1].rebuf[i],
-            #                                       in_compute[1].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-            #             r_above = sum([get_reward(in_compute[2].quality[i], in_compute[2].rebuf[i],
-            #                                       in_compute[2].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-            #             if r_above == max(r_below, r_normal, r_above):
-            #                 policy.update(in_compute[0].chunk_index, 1)
-            #                 # a_batch[in_compute[0].chunk_index][1] = in_compute[0].chunk_init_bitrate
-            #             elif r_normal == max(r_below, r_normal, r_above):
-            #                 policy.update(in_compute[0].chunk_index, -1)
-            #                 # a_batch[in_compute[1].chunk_index][1] = in_compute[1].chunk_init_bitrate
-            #             else:
-            #                 policy.update(in_compute[0].chunk_index, 0)
-            #                 # a_batch[in_compute[2].chunk_index][1] = in_compute[2].chunk_init_bitrate
-            #
-            #             in_compute.pop(0)
-            #             in_compute.pop(0)
-            #             in_compute.pop(0)
 
             if end_of_video:
                 # print(a_batch)

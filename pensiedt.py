@@ -46,9 +46,7 @@ class PensieveDT:
             all_cooked_time, all_cooked_bw, all_file_names = load_trace.load_trace(args.traces)
             net_env = env.Environment(all_cooked_time=all_cooked_time, all_cooked_bw=all_cooked_bw,
                                       all_file_names=all_file_names)
-        if args.update:
-            log_f = log_f.replace('dt', 'du')
-
+        
         if not viper_flag and args.log:
             log_path = log_f + '_' + net_env.all_file_names[net_env.trace_idx] + '_' + args.qoe_metric
             log_file = open(log_path, 'wb')
@@ -73,7 +71,6 @@ class PensieveDT:
         if policy is None:
             with open(args.dt, 'rb') as f:
                 policy = pk.load(f)
-        policy = fsm.FSM(policy)
 
         while True:  # serve video forever
             delay, sleep_time, buffer_size, rebuf, video_chunk_size, next_video_chunk_sizes, end_of_video, \
@@ -119,46 +116,6 @@ class PensieveDT:
             bit_rate = int(policy.predict(np.array(serialized_state).reshape(1, -1))[0])
             rollout.append((state, bit_rate, serialized_state))
             s_batch.append(state)
-
-            if args.update:
-                chunk_index = int(CHUNK_TIL_VIDEO_END_CAP - video_chunk_remain - 1)
-                policy.chunk_leaf[chunk_index] = policy.tree.apply(np.array(serialized_state).reshape(1, -1))
-                if chunk_index < CHUNK_TIL_VIDEO_END_CAP - HORIZON:
-                    in_compute.append(fsm.Trajectory(chunk_index, max(0, bit_rate - 1), buffer_size - CHUNK_LEN,
-                                                     last_bit_rate, state, args))
-                    in_compute.append(fsm.Trajectory(chunk_index, bit_rate, buffer_size - CHUNK_LEN,
-                                                     last_bit_rate, state, args))
-                    in_compute.append(fsm.Trajectory(chunk_index, min(5, bit_rate + 1), buffer_size - CHUNK_LEN,
-                                                     last_bit_rate, state, args))
-
-                for traj in in_compute:
-                    this_chunk_size = video_chunk_size
-                    this_delay = delay
-                    while True:
-                        if traj.apply(this_chunk_size, this_delay) == CHUNK_SWITCH:
-                            new_bitrate = int(policy.predict(np.array(serial(traj.states)).reshape(1, -1))[0])
-                            traj.next_chunk(new_bitrate)
-                            this_chunk_size, this_delay = traj.trans_msg
-                        else:
-                            break
-
-                    while len(in_compute) > 1 and in_compute[0].end and in_compute[1].end and in_compute[2].end:
-                        r_below = sum([get_reward(in_compute[0].quality[i], in_compute[0].rebuf[i],
-                                                  in_compute[0].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-                        r_normal = sum([get_reward(in_compute[1].quality[i], in_compute[1].rebuf[i],
-                                                  in_compute[1].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-                        r_above = sum([get_reward(in_compute[2].quality[i], in_compute[2].rebuf[i],
-                                                  in_compute[2].last_bitrate[i], args.qoe_metric) for i in range(HORIZON)])
-                        if r_above == max(r_below, r_normal, r_above):
-                            policy.update(in_compute[0].chunk_index, 1)
-                        elif r_normal == max(r_below, r_normal, r_above):
-                            policy.update(in_compute[0].chunk_index, -1)
-                        else:
-                            policy.update(in_compute[0].chunk_index, 0)
-
-                        in_compute.pop(0)
-                        in_compute.pop(0)
-                        in_compute.pop(0)
 
             if end_of_video:
                 if args.log:
