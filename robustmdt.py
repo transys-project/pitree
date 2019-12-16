@@ -4,7 +4,6 @@ import pickle as pk
 import fixed_env as env
 import load_trace
 from get_reward import get_reward
-import fsm
 
 
 S_INFO = 5  # bit_rate, buffer_size, rebuffering_time, bandwidth_measurement, chunk_til_video_end
