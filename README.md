@@ -45,7 +45,7 @@ If you want to test your own ABR algorithms with PiTree, you could
 (We will refactor the codes soon in a more user-friendly way and will update the repo soon.)
 
 
-## Emulation with Mahimahi
+## Simulation with Pensieve Simulator
 
 ```
 python main.py -a pensieve -t fcc -q lin -d path/to/your/tree.pk -l
@@ -57,6 +57,11 @@ Parameter | Candidates | Explanation
 -l | {0,1} | Log the states and bitrates.
 -q | {lin, log, hd} | QoE metrics.
 -t | {fcc, norway, oboe} | Trained traces.
+
+## Put the Decision Tree into HTML and Deploy with Apache
+
+Currently, you may want to refer to [this link](https://github.com/TranSys2020/TranSys/tree/master/case_2) for details. We will refactor this part soon.
+
 ## Start a Server with Tornado
 
 ```
