@@ -192,7 +192,7 @@ if __name__ == '__main__':
     with open('decision_tree/' + args.abr + '_' + args.traces + '_' + str(args.leaf_nodes) + '.pk3', 'wb') as f:
         pk.dump(best_tree, f)
 
-    if args.visualize = True:
+    if args.visualize:
         dot_data = StringIO()
         export_graphviz(best_tree, out_file=dot_data, filled=True)
         out_graph = pydotplus.graph_from_dot_data(dot_data.getvalue())

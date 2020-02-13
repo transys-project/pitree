@@ -78,7 +78,6 @@ class RobustMPCDT:
         if policy is None:
             with open(args.dt, 'rb') as f:
                 policy = pk.load(f)
-        policy = fsm.FSM(policy)
 
         # ========= @ zili: debug ========
         # with open('decision_tree_ready/robustmpc_norway_500.pk3', 'rb') as f:
