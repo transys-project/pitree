@@ -3,7 +3,7 @@ PiTree is a conversion tool to automatically and faithfully convert complex adap
 
 *Zili Meng, Jing Chen, Yaning Guo, Chen Sun, Hongxin Hu, Mingwei Xu. PiTree: Practical Implementations of ABR Algorithms Using Decision Trees. In Proceedings of ACM Multimedia 2019.*
 
-For more information, please refer to https://transys.io/pitree.
+For more information, please refer to https://pitree.transys.io/.
 
 ## Prerequisites
 
@@ -14,6 +14,7 @@ pip install -r requirements.txt
 unzip traces.zip
 unzip models.zip
 mkdir results
+mkdir tree
 ```
 
 ## Converting Decision Trees
@@ -66,6 +67,20 @@ Currently, you may want to refer to [this link](https://github.com/TranSys2020/T
 
 ```
 python server_tornado.py
+```
+
+## Citation
+
+```
+@inproceedings{meng2019pitree,
+ author = {Meng, Zili and Chen, Jing and Guo, Yaning and Sun, Chen and Hu, Hongxin and Xu, Mingwei},
+ title = {PiTree: Practical Implementation of ABR Algorithms Using Decision Trees},
+ year = {2019},
+ url = {https://doi.org/10.1145/3343031.3350866},
+ booktitle = {Proceedings of the 27th ACM International Conference on Multimedia},
+ pages = {2431–2439},
+ series = {MM ’19}
+}
 ```
 
 ## Contact
