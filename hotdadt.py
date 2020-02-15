@@ -16,34 +16,21 @@ S_INFO_PENSIEVE = 6
 S_LEN = 8  # take how many frames in the past
 A_DIM = 6
 A_DIM_prefetch = 2
-ACTOR_LR_RATE = 0.0001
-CRITIC_LR_RATE = 0.001
-NUM_AGENTS = 16
-# NUM_AGENTS = 1
 
-TRAIN_SEQ_LEN = 100  # take as a train batch
-MODEL_SAVE_INTERVAL = 100
-ENTROPY_CHANGE_INTERVAL = 20000
-VIDEO_BIT_RATE = [300, 750, 1200, 1850, 2850, 4300]  # Kbps
+VIDEO_BIT_RATE = [1000, 2500, 5000, 8000, 16000, 40000]  # Kbps
 HD_REWARD = [1, 2, 3, 12, 15, 20]
-NORM_REWARD = [1, 2, 3, 12, 15, 20]
 
 BUFFER_NORM_FACTOR = 10.0
-CHUNK_TIL_VIDEO_END_CAP = 48.0
+CHUNK_TIL_VIDEO_END_CAP = 80.0
 NUM_HOTSPOT_CHUNKS = 5
 M_IN_K = 1000.0
 BITRATE_LEVELS = 6
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> 3 Mbps
+REBUF_PENALTY = {'lin': 40, 'log': 3.69, 'hd': 8}
 SMOOTH_PENALTY = 1
 DEFAULT_QUALITY = 1  # default video quality without agent
 DEFAULT_PREFETCH = 0 # default prefetch decision without agent
-RANDOM_SEED = 42
-RAND_RANGE = 1000
-SUMMARY_DIR = './results'
 LOG_FILE = './results/log_hotdadt'
 # log in format of time_stamp bit_rate buffer_size rebuffer_time chunk_size download_time reward
-NN_MODEL = './models/pretrain_linear_reward.ckpt'
-
 ACTIONS = [0, 1]
 
 
@@ -130,7 +117,7 @@ class HotdashDT:
             else:
                 raise NotImplementedError
             reward_br = util_array[int(last_hotspot_bit_rate) if was_hotspot_chunk else int(last_bit_rate)]
-            reward_rebuffering = REBUF_PENALTY * rebuf * 1.0
+            reward_rebuffering = REBUF_PENALTY[args.qoe_metric] * rebuf * 1.0
             reward_smoothness = 0.0
             if len(smoothness_eval_bitrates) > 1:
                 for i in range(len(smoothness_eval_bitrates)-1):
@@ -262,7 +249,6 @@ class HotdashDT:
                 s_batch_pensieve1.append(np.zeros((S_INFO_PENSIEVE, S_LEN)))
                 s_batch_pensieve2.append(np.zeros((S_INFO_PENSIEVE, S_LEN)))
                 a_batch.append(action_vec)
-                entropy_record = []
 
                 if viper_flag:
                     break

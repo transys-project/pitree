@@ -2,7 +2,10 @@ import os
 
 
 def load_trace(cooked_trace):
-    cooked_trace_folder = 'sim_' + cooked_trace + '/'
+    if cooked_trace in ['norway', 'fcc', 'oboe']:
+        cooked_trace_folder = 'sim_' + cooked_trace + '/'
+    else:
+        cooked_trace_folder = './new_traces/' + cooked_trace + '/'
     cooked_files = os.listdir(cooked_trace_folder)
     # cooked_files.sort()
     all_cooked_time = []

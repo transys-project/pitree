@@ -10,45 +10,20 @@ import tensorflow as tf
 
 ######################################################################
 
-S_INFO = 6  # bit_rate, buffer_size, next_chunk_size, bandwidth_measurement(throughput and time), chunk_til_video_end
-S_LEN = 8  # take how many frames in the past
-A_DIM = 6
-ACTOR_LR_RATE = 0.0001
-CRITIC_LR_RATE = 0.001
-VIDEO_BIT_RATE = [300, 750, 1200, 1850, 2850, 4300]  # Kbps
-BUFFER_NORM_FACTOR = 10.0
-CHUNK_TIL_VIDEO_END_CAP = 48.0
-M_IN_K = 1000.0
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> 3 Mbps
-SMOOTH_PENALTY = 1
 DEFAULT_QUALITY = 1  # default video quality without agent
 RANDOM_SEED = 42
-RAND_RANGE = 1000
-LOG_FILE = './results/log_sim_rl'
-TEST_TRACES = './old_traces/cooked_norway_traces/'
-# log in format of time_stamp bit_rate buffer_size rebuffer_time chunk_size download_time reward
-# NN_MODEL = sys.argv[1]
-ABR_NN_MODEL = './models/pretrain_linear_reward.ckpt'
-# HOTSPOTS_FILE = './current_hotspots.pkl'
-
-######################################################################
-
 NUM_HOTSPOT_CHUNKS = 5
-# NUM_HOTSPOT_CHUNKS = 7
 MILLISECONDS_IN_SECOND = 1000.0
 B_IN_MB = 1000000.0
 BITS_IN_BYTE = 8.0
 VIDEO_CHUNK_LEN = 4000.0  # millisec, every time add this amount to buffer
 BITRATE_LEVELS = 6
-TOTAL_VIDEO_CHUNK = 49
-BUFFER_THRESH = 60.0 * MILLISECONDS_IN_SECOND  # millisec, max buffer limit
+TOTAL_VIDEO_CHUNK = 80
+BUFFER_THRESH = 30.0 * MILLISECONDS_IN_SECOND  # millisec, max buffer limit
 DRAIN_BUFFER_SLEEP_TIME = 500.0  # millisec
 PACKET_PAYLOAD_PORTION = 0.95
 LINK_RTT = 80  # millisec
-PACKET_SIZE = 1500  # bytes
 VIDEO_SIZE_FILE = 'video/video_size_'
-
-HOTSPOT_CHUNKS_PERCENT = 10 # percentage of chunks which are hotspot
 
 ######################################################################
 
@@ -416,7 +391,7 @@ class Environment:
         smoothness_eval_bitrates = self.all_bitrate_decisions[self.smoothness_eval_start_chunk:last_in_sync_chunk]
 
         end_of_video = False
-        if self.video_chunk_counter >= TOTAL_VIDEO_CHUNK-1: # or self.hotspot_chunk_counter == NUM_HOTSPOT_CHUNKS:
+        if self.video_chunk_counter >= TOTAL_VIDEO_CHUNK - 1: # or self.hotspot_chunk_counter == NUM_HOTSPOT_CHUNKS:
             end_of_video = True
             # print "End of video: {}".format(end_of_video)
             self.reset()

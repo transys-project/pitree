@@ -20,26 +20,19 @@ S_INFO = S_ABR_INFO + S_HOT_INFO + S_BRT_INFO
 S_INFO_PENSIEVE = 6
 S_LEN = 8  # take how many frames in the past
 A_DIM = 6
-A_DIM_prefetch =2
+A_DIM_prefetch = 2
 ACTOR_LR_RATE = 0.0001
 CRITIC_LR_RATE = 0.001
-NUM_AGENTS = 16
-# NUM_AGENTS = 1
-S_INFO_bitr = 6
 
-
-TRAIN_SEQ_LEN = 100  # take as a train batch
-MODEL_SAVE_INTERVAL = 100
-ENTROPY_CHANGE_INTERVAL = 20000
-VIDEO_BIT_RATE = [300, 750, 1200, 1850, 2850, 4300]  # Kbps
+VIDEO_BIT_RATE = [1000, 2500, 5000, 8000, 16000, 40000]  # Kbps
 HD_REWARD = [1, 2, 3, 12, 15, 20]
 
 BUFFER_NORM_FACTOR = 10.0
-CHUNK_TIL_VIDEO_END_CAP = 48.0
+CHUNK_TIL_VIDEO_END_CAP = 80.0
 NUM_HOTSPOT_CHUNKS = 5
 M_IN_K = 1000.0
 BITRATE_LEVELS = 6
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> 3 Mbps
+REBUF_PENALTY = {'lin': 40, 'log': 3.69, 'hd': 8}
 SMOOTH_PENALTY = 1
 DEFAULT_QUALITY = 1  # default video quality without agent
 DEFAULT_PREFETCH = 0 # default prefetch decision without agent
@@ -172,7 +165,7 @@ class Hotdash:
             else:
                 raise NotImplementedError
             reward_br = util_array[int(last_hotspot_bit_rate) if was_hotspot_chunk else int(last_bit_rate)]
-            reward_rebuffering = REBUF_PENALTY * rebuf * 1.0
+            reward_rebuffering = REBUF_PENALTY[args.qoe_metric] * rebuf * 1.0
             reward_smoothness = 0.0
             if len(smoothness_eval_bitrates) > 1:
                 for i in range(len(smoothness_eval_bitrates)-1):

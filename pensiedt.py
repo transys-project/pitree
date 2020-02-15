@@ -9,25 +9,11 @@ from get_reward import get_reward
 S_INFO = 6  # bit_rate, buffer_size, next_chunk_size, bandwidth_measurement(throughput and time), chunk_til_video_end
 S_LEN = 8  # take how many frames in the past
 A_DIM = 6
-ACTOR_LR_RATE = 0.0001
-CRITIC_LR_RATE = 0.001
-VIDEO_BIT_RATE = [300, 750, 1200, 1850, 2850, 4300]  # Kbps
-BITRATE_REWARD = [1, 2, 3, 12, 15, 20]
+VIDEO_BIT_RATE = [1000, 2500, 5000, 8000, 16000, 40000]  # Kbps
 BUFFER_NORM_FACTOR = 10.0
-CHUNK_TIL_VIDEO_END_CAP = 48.0
+CHUNK_TIL_VIDEO_END_CAP = 80.0
 M_IN_K = 1000.0
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> 3 Mbps
-SMOOTH_PENALTY = 1
 DEFAULT_QUALITY = 0  # default video quality without agent
-RANDOM_SEED = 42
-RAND_RANGE = 1000
-
-CHUNK_ON = 0
-CHUNK_SWITCH = 1
-OPTIMIZED = 2
-HORIZON = 5
-CHUNK_LEN = 4.0
-BITRATE_NUM = 6
 
 LOG_FILE = 'results/log_pensiedt'
 

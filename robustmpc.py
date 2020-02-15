@@ -10,23 +10,17 @@ S_INFO = 5  # bit_rate, buffer_size, rebuffering_time, bandwidth_measurement, ch
 S_LEN = 8  # take how many frames in the past
 A_DIM = 6
 MPC_FUTURE_CHUNK_COUNT = 5
-ACTOR_LR_RATE = 0.0001
-CRITIC_LR_RATE = 0.001
-VIDEO_BIT_RATE = [300, 750, 1200, 1850, 2850, 4300]  # Kbps
+
+VIDEO_BIT_RATE = [1000, 2500, 5000, 8000, 16000, 40000]  # Kbps
 BITRATE_REWARD = [1, 2, 3, 12, 15, 20]
 BUFFER_NORM_FACTOR = 10.0
-CHUNK_TIL_VIDEO_END_CAP = 48.0
-TOTAL_VIDEO_CHUNKS = 48
+CHUNK_TIL_VIDEO_END_CAP = 80.0
+TOTAL_VIDEO_CHUNKS = 80
 M_IN_K = 1000.0
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> 3 Mbps
-SMOOTH_PENALTY = 1
+REBUF_PENALTY = {'lin': 40, 'log': 3.69, 'hd': 8}  # 1 sec rebuffering -> 40 Mbps
 DEFAULT_QUALITY = 1  # default video quality without agent
 RANDOM_SEED = 42
-RAND_RANGE = 1000000
-SUMMARY_DIR = './results'
 LOG_FILE = './results/log_robustmpc'
-# log in format of time_stamp bit_rate buffer_size rebuffer_time chunk_size download_time reward
-# NN_MODEL = './models/nn_model_ep_5900.ckpt'
 
 CHUNK_COMBO_OPTIONS = []
 for combo in itertools.product([0, 1, 2, 3, 4, 5], repeat=5):
@@ -238,7 +232,7 @@ class RobustMPC:
             # compute reward for this combination (one reward per 5-chunk combo)
             # bitrates are in Mbits/s, rebuffer in seconds, and smoothness_diffs in Mbits/s
 
-            reward = (bitrate_sum / 1000.) - (REBUF_PENALTY * curr_rebuffer_time) - (smoothness_diffs / 1000.)
+            reward = (bitrate_sum / 1000.) - (REBUF_PENALTY[qoe_metric] * curr_rebuffer_time) - (smoothness_diffs / 1000.)
 
             if reward >= max_reward:
                 if (best_combo != ()) and best_combo[0] < combo[0]:

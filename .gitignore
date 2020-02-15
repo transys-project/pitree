@@ -132,4 +132,5 @@ precision/
 time/
 rewards/
 models/
-trees/
+tree/
+new_traces/

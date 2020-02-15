@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log', action='store_true')
     parser.add_argument('-d', '--dt', default=None)
     parser.add_argument('-q', '--qoe-metric', choices=['lin', 'log', 'hd'])
-    parser.add_argument('-t', '--traces', choices=['norway', 'fcc', 'oboe'])
+    parser.add_argument('-t', '--traces', choices=['norway', 'fcc', 'oboe', 'fcc18', 'ghent', 'hsr', 'surrey'])
 
     args = parser.parse_args()
     main(args)
