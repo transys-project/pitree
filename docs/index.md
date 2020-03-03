@@ -21,7 +21,7 @@ Zili Meng, Jing Chen, Yaning Guo, Chen Sun, Hongxin Hu, Mingwei Xu
 
 In _Proceedings of the [ACM International Conference on Multimedia (2019)](https://www.acmmm.org/2019/)_
 
-[[Paper](https://zilimeng.com/pitree-mm19.pdf)][[ACM DL](https://dl.acm.org/citation.cfm?id=3350866)]
+[[Paper](https://zilimeng.com/papers/pitree-mm19.pdf)][[ACM DL](https://dl.acm.org/doi/abs/10.1145/3343031.3350866)]
 
 ## Citation
 
@@ -30,15 +30,9 @@ In _Proceedings of the [ACM International Conference on Multimedia (2019)](https
  author = {Meng, Zili and Chen, Jing and Guo, Yaning and Sun, Chen and Hu, Hongxin and Xu, Mingwei},
  title = {PiTree: Practical Implementation of ABR Algorithms Using Decision Trees},
  year = {2019},
- isbn = {9781450368896},
- publisher = {Association for Computing Machinery},
- address = {New York, NY, USA},
  url = {https://doi.org/10.1145/3343031.3350866},
- doi = {10.1145/3343031.3350866},
  booktitle = {Proceedings of the 27th ACM International Conference on Multimedia},
  pages = {2431–2439},
- numpages = {9},
- keywords = {client-side implementation, practicality, ABR, decision tree},
  location = {Nice, France},
  series = {MM ’19}
 }
@@ -56,4 +50,4 @@ This project is supported by National Key R&D Program of China (2017YFB0801701) 
 
 ## Contact
 
-For any questions, please send an email to [contact@transys.io](mailto:contact@transys.io).
+For any questions, please send an email to [zilim@ieee.org](mailto:zilim@ieee.org).
