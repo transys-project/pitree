@@ -4,7 +4,7 @@ PiTree is a conversion tool to automatically and faithfully convert complex adap
 
 *Zili Meng, Jing Chen, Yaning Guo, Chen Sun, Hongxin Hu, Mingwei Xu. PiTree: Practical Implementations of ABR Algorithms Using Decision Trees. In Proceedings of ACM Multimedia 2019.*
 
-For more information, please refer to https://pitree.transys.io/.
+For more information, please refer to https://transys.io/pitree.
 
 ## Prerequisites
 
