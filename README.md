@@ -64,7 +64,7 @@ Parameter | Candidates | Explanation
 
 ## Put the Decision Tree into HTML and Deploy with Apache
 
-Currently, you may want to refer to [this link](https://github.com/TranSys2020/TranSys/tree/master/case_2) for details. We will refactor this part soon.
+Currently, you may want to refer to [this link](https://github.com/transys-project/metis/tree/master/case-deploy) for details. We will refactor this part soon.
 
 ## Start a Server with Tornado
 
