@@ -1,4 +1,5 @@
 # PiTree
+
 PiTree is a conversion tool to automatically and faithfully convert complex adaptive bitrate algorithms into lightweight decision trees. This repository is the official release of the following paper:
 
 *Zili Meng, Jing Chen, Yaning Guo, Chen Sun, Hongxin Hu, Mingwei Xu. PiTree: Practical Implementations of ABR Algorithms Using Decision Trees. In Proceedings of ACM Multimedia 2019.*
@@ -9,7 +10,7 @@ For more information, please refer to https://pitree.transys.io/.
 
 Tested with Python 3.7.4:
 
-```
+```console
 pip install -r requirements.txt
 unzip traces.zip
 unzip models.zip
@@ -20,11 +21,13 @@ mkdir tree
 ## Converting Decision Trees
 
 ### Pre-built ABR Algorithms: RobustMPC, Pensieve, and HotDASH
-```
+
+```console
 python learn_dt.py -a pensieve -t fcc -i 500 -n 100 -q lin
 ```
+
 Parameter | Candidates | Explanation
-:-: | :-: | :-: 
+:-: | :-: | :-:
 -a | {robustmpc, pensieve, hotdash} | The ABR algorithm to convert.
 -i | Integer (default=500) | Number of iterations during training.
 -n | Integer (default=100) | Number of leaf nodes.
@@ -45,14 +48,14 @@ If you want to test your own ABR algorithms with PiTree, you could
 
 (We will refactor the codes soon in a more user-friendly way and will update the repo soon.)
 
-
 ## Simulation with Pensieve Simulator
 
-```
+```console
 python main.py -a pensieve -t fcc -q lin -d path/to/your/tree.pk -l
 ```
+
 Parameter | Candidates | Explanation
-:-: | :-: | :-: 
+:-: | :-: | :-:
 -a | {robustmpc, pensieve, hotdash} | The ABR algorithm to convert.
 -d | {0,1} | Predict with the decision tree (`1`) or the original model (`0`).
 -l | {0,1} | Log the states and bitrates.
@@ -65,13 +68,13 @@ Currently, you may want to refer to [this link](https://github.com/TranSys2020/T
 
 ## Start a Server with Tornado
 
-```
+```console
 python server_tornado.py
 ```
 
 ## Citation
 
-```
+```text
 @inproceedings{meng2019pitree,
  author = {Meng, Zili and Chen, Jing and Guo, Yaning and Sun, Chen and Hu, Hongxin and Xu, Mingwei},
  title = {PiTree: Practical Implementation of ABR Algorithms Using Decision Trees},
